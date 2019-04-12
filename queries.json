@@ -1,0 +1,20 @@
+{"data":[
+	[
+		"ERRRRRR",
+		"erro"
+	],
+	[
+	"SELECT * FROM fib",
+	"Todos"
+	],
+
+	[
+	"SELECT * FROM fib WHERE n=1",
+	"onde n=1"
+	],
+	[
+		"SELECT * FROM fib WHERE n>=2",
+		"onde n>=2"
+	]
+]
+}

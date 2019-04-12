@@ -1,0 +1,29 @@
+td,th{
+	border:1px solid black;
+	margin-left:3px;
+	padding-left: 5px;
+	padding-right: 5px;
+	width:fit-content;
+	text-align: center;
+}
+#query{
+	width: fit-content;
+	border:1px solid black;
+	margin:10px;
+	padding: 2px;
+	line-height: 2;
+}
+#queryi{
+	font-weight: bold;
+}
+#queryd{
+	
+}
+#header{
+
+}
+#title{
+	margin:10px;
+	font-size: larger;
+	font-weight: bold;
+}

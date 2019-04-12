@@ -1,0 +1,24 @@
+{
+  "name": "bd2t1",
+  "version": "1.0.0",
+  "description": "Trabalho 1 de Banco de Dados II - UFMS CPPP",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/llpinokio/bd2t1.git"
+  },
+  "author": "Giuliano Oliveira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/llpinokio/bd2t1/issues"
+  },
+  "homepage": "https://github.com/llpinokio/bd2t1#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mysql": "^2.16.0"
+  }
+}
