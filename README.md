@@ -5,5 +5,6 @@
 * npm
 
 ## Executar
-Basta executar <code>node app.js</code> depois ir na página <code>http://localhost:4242/</code>
+Execute <code>npm install</code> para resolver as dependências
+ depois basta executar <code>node app.js</code> depois ir na página <code>http://localhost:4242/</code>
 no seu navegador
