@@ -4,6 +4,7 @@
   "description": "Trabalho 1 de Banco de Dados II - UFMS CPPP",
   "main": "app.js",
   "scripts": {
+    "clean": "rm -rf node_modules",
     "test": "node app.js"
   },
   "repository": {
