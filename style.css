@@ -1,3 +1,10 @@
+body {
+        height: 842px;
+        width: 595px;
+        /* to centre page on screen*/
+        margin-left: auto;
+        margin-right: auto;
+    }
 td,th{
 	border:1px solid black;
 	margin-left:3px;
@@ -5,6 +12,12 @@ td,th{
 	padding-right: 5px;
 	width:fit-content;
 	text-align: center;
+}
+#querytable{
+	border:1px solid black;
+}
+#insertQuerie{
+	border:1px solid black;	
 }
 #query{
 	width: fit-content;

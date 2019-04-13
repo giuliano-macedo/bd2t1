@@ -15,6 +15,10 @@
 	[
 		"SELECT * FROM fib WHERE n>=2",
 		"onde n>=2"
+	],
+	[
+		"SELECT * FROM fib WHERE n=10",
+		"Nada"
 	]
 ]
 }
