@@ -1,0 +1,1 @@
+new (require("./bdt1.js"))().createTables();

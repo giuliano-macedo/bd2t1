@@ -16,16 +16,16 @@
 		"id INT NOT NULL AUTO_INCREMENT",
 		"usuarioApelido VARCHAR(64),",
 		"status ENUM('espera','em producao','entregando','entregue')",
+		"endereco VARCHAR(255)",
 		"dataCriado DATETIME",
 		"dataModificado DATETIME",
 		"FOREIGN KEY (usuarioApelido) REFERENCES usuario(apelido)",
 		"PRIMARY KEY(id)"
 	],
 	"pedidoInfo":[
-		"id INT NOT NULL AUTO_INCREMENT",
 		"idPedido INT",
 		"idCardapio INT",
-		"PRIMARY KEY (id)",
+		"PRIMARY KEY (idPedido,idCardapio)",
 		"FOREIGN KEY(idPedido) REFERENCES pedido(id)",
 		"FOREIGN KEY(idCardapio) REFERENCES cardapio(id)"
 	]

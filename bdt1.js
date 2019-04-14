@@ -12,6 +12,14 @@ class BDT1{
 		});
 		this.query = util.promisify(this.con.query).bind(this.con);
 	}
+	async createTables(){
+		let tables=JSON.parse(fs.readFileSync("tables.json","utf-8")).data;
+		for(let tablename in tables){
+			if(!tables.hasOwnProperty(tablename))continue;
+			await this.query("CREATE TABLE "+tablename+"("+table[tablename].join(",")+")");
+		}
+
+	}
 	mat2html(mat){
 		let ans="<table>"
 		mat.forEach((elemi,i)=>{
