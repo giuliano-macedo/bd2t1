@@ -27,33 +27,53 @@ class BDT1{
 		})
 		return ans+"</table>";
 	}
+	async querytohtml(query){
+		let rows = null;
+		try{
+			rows=await this.query(query);
+		}catch(e){console.log("sql error for ("+query+") : "+e.sqlMessage);}
+		
+		if(rows==null)return this.mat2html([["Erro SQL"]]);
+		if(rows.length==0)return this.mat2html([["Tupla vazia"]]);
+		let mat=[[]];
+		for(let k in rows[0]){
+			if(!rows[0].hasOwnProperty(k))continue;
+			mat[0].push(k);
+		}
+		rows.forEach((tup,tupi)=>{
+			let temp=[]
+			for(let k in tup){
+				if(!tup.hasOwnProperty(k))continue;
+				temp.push(tup[k]);
+			}
+			mat.push(temp);
+		});
+		return this.mat2html(mat);
+	}
 	async page(req,res,next){
+		const readFile=(filename)=>{return fs.readFileSync(filename,"utf-8");}
+		const readJsonFile=(filename)=>{return JSON.parse(readFile(filename));}
 		let queries=[];
 		let descriptions=[];
-		JSON.parse(fs.readFileSync("queries.json","utf-8")).data.forEach((d)=>{
+		readJsonFile("queries.json").data.forEach((d)=>{
 			queries.push(d[0]);
 			descriptions.push(d[1]);
 		});
-		let tables=JSON.parse(fs.readFileSync("tables.json","utf-8")).data;
-		let insertQueries=JSON.parse(fs.readFileSync("insertQueries.json","utf-8")).data;
-		let css=fs.readFileSync("style.css","utf-8");
-		let header=fs.readFileSync("header.html","utf-8");
-		let footer=fs.readFileSync("footer.html","utf-8");
+		let tables=       readJsonFile("tables.json").data;
+		let insertQueries=readJsonFile("insertQueries.json").data;
+		let css=          readFile("style.css");
+		let header=       readFile("header.html");
+		let footer=       readFile("footer.html");
 		res.write("<style>"+css+"</style>");
 		res.write(header);
-		res.write("<b>Tabelas</b><br>");
-		tables.forEach((elem)=>{
-			try{
-				elem=elem.split("(");
-				elem[0]="<b>"+elem[0]+"</b>";
-				elem=elem.join("(");
-			}catch(e){
-				elem=elem.join("(");
-			}
-			res.write("<span id='querytable'>"+elem+"</span><br>");
-		});
-		res.write("<br><br>");
-		res.write("<span id='title'><b>$n consultas mysql para as tabelas acima</b><br></span>".replace("$n",queries.length));
+		res.write("<b>Tabelas</b><br><br><hr><br>");
+		for(let tablename in tables){
+			if(!tables.hasOwnProperty(tablename))continue;
+			res.write("<b>Nome da tabela:</b>"+tablename+"<br>");
+			res.write("<b>Conteúdo:</b>");
+			res.write((await this.querytohtml("SELECT * FROM "+tablename))+"<br><br>");
+		}
+		res.write("<hr><br><span id='title'><b>$n consultas mysql para as tabelas acima</b><br></span>".replace("$n",queries.length));
 		for(let i=0;i<queries.length;i++){
 			let sql=queries[i];
 			let description=descriptions[i];
@@ -61,38 +81,14 @@ class BDT1{
 			res.write("<span id='queryd'><b>Descrição: </b>"+description+"</span><br>");
 			res.write("<b>SQL: </b><span id='query'><i>"+sql+"</i></span><br>");
 			res.write("<b>Resultado:</b>");
-			let rows = null;
-			try{
-				rows=await this.query(sql);
-			}catch(e){console.log(e.sqlMessage);}
-			if(rows==null){
-				res.write(this.mat2html([["Erro SQL"]])+"<br><br>");
-				continue;
-			}
-			if(rows.length==0){
-				res.write(this.mat2html([["Tupla vazia"]])+"<br><br>");
-				continue;
-			}
-			let mat=[[]];
-			for(let k in rows[0]){
-				if(!rows[0].hasOwnProperty(k))continue;
-				mat[0].push(k);
-			}
-			rows.forEach((tup,tupi)=>{
-				let temp=[]
-				for(let k in tup){
-					if(!tup.hasOwnProperty(k))continue;
-					temp.push(tup[k]);
-				}
-				mat.push(temp);
-			});
-			res.write(this.mat2html(mat)+"<br><br>");
+			res.write(await(this.querytohtml(sql))+"<br><br>");
 		}
 		res.write("<br><br>");
 		res.write("<b>Extras - consultas para inserir tuplas nas tabelas:</b><br><br>");
 		insertQueries.forEach((elem)=>{
 			res.write("<span id='insertQuerie'>"+elem+"</span><br>");
 		});
+		res.write("<hr>");
 		res.write(footer);
 		res.end();
 	}

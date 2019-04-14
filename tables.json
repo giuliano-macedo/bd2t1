@@ -1,5 +1,33 @@
-{"data":[
-	"usuarios (apelido VARCHAR(64) PRIMARY KEY,hash CHAR(64),nome VARCHAR(64),dataAniversario DATE)",
-	"foo(id INT PRIMARY KEY NOT NULL,date TIMESTAMP)"
-]
+{"data":{
+	"usuario":[
+		"apelido VARCHAR(64) NOT NULL",
+		"hash CHAR(64)",
+		"nome VARCHAR(64)",
+		"dataAniversario DATE",
+		"PRIMARY KEY(apelido)"
+	],
+	"cardapio":[
+		"id INT NOT NULL",
+		"nome VARCHAR(64)",
+		"preco INT NOT NULL",
+		"PRIMARY KEY (id)"
+	],
+	"pedido":[
+		"id INT NOT NULL AUTO_INCREMENT",
+		"usuarioApelido VARCHAR(64),",
+		"status ENUM('espera','em producao','entregando','entregue')",
+		"dataCriado DATETIME",
+		"dataModificado DATETIME",
+		"FOREIGN KEY (usuarioApelido) REFERENCES usuario(apelido)",
+		"PRIMARY KEY(id)"
+	],
+	"pedidoInfo":[
+		"id INT NOT NULL AUTO_INCREMENT",
+		"idPedido INT",
+		"idCardapio INT",
+		"PRIMARY KEY (id)",
+		"FOREIGN KEY(idPedido) REFERENCES pedido(id)",
+		"FOREIGN KEY(idCardapio) REFERENCES cardapio(id)"
+	]
+	}
 }

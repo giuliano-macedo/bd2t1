@@ -1,9 +1,8 @@
 body {
-        height: 842px;
-        width: 595px;
-        /* to centre page on screen*/
-        margin-left: auto;
-        margin-right: auto;
+    height: 842px;
+    width: 595px;
+    margin-left: auto;
+    margin-right: auto;
     }
 td,th{
 	border:1px solid black;
@@ -15,6 +14,10 @@ td,th{
 }
 #querytable{
 	border:1px solid black;
+	word-break: break-all;
+    font-size: 12px;
+    float: left;
+    margin-bottom: 5px;
 }
 #insertQuerie{
 	border:1px solid black;	

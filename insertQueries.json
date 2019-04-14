@@ -1,5 +1,5 @@
 {"data":[
-	"INSERT INTO usuarios VALUES ('fulanoManeiro',SHA2('1234',256),'fulano','1995-01-01')",
+	"INSERT INTO usuario VALUES ('fulanoManeiro',SHA2('1234',256),'fulano','1995-01-01')"
 
 ]
 }
