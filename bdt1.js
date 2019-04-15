@@ -1,6 +1,7 @@
 const fs = require('fs');
 const mysql=require("mysql");
 const util = require("util");
+const sqlFormatter=require("sql-formatter").format;
 module.exports=
 class BDT1{
 	constructor(){
@@ -16,7 +17,13 @@ class BDT1{
 		let tables=JSON.parse(fs.readFileSync("tables.json","utf-8")).data;
 		for(let tablename in tables){
 			if(!tables.hasOwnProperty(tablename))continue;
-			await this.query("CREATE TABLE "+tablename+"("+table[tablename].join(",")+")");
+			let sql="CREATE TABLE "+tablename+"("+tables[tablename].join(",")+")";
+			try{
+				await this.query(sql);
+			}catch(e){
+				console.log(e.sqlMessage);
+				return;
+			}
 		}
 
 	}
@@ -87,14 +94,14 @@ class BDT1{
 			let description=descriptions[i];
 			res.write("<span id='queryi'>"+(i+1)+")</span><br>");
 			res.write("<span id='queryd'><b>Descrição: </b>"+description+"</span><br>");
-			res.write("<b>SQL: </b><span id='query'><i>"+sql+"</i></span><br>");
+			res.write("<b>SQL: </b><br><span id='query'><i>"+sqlFormatter(sql).split("\n").join("<br>")+"</i></span><br>");
 			res.write("<b>Resultado:</b>");
 			res.write(await(this.querytohtml(sql))+"<br><br>");
 		}
 		res.write("<br><br>");
 		res.write("<b>Extras - consultas para inserir tuplas nas tabelas:</b><br><br>");
 		insertQueries.forEach((elem)=>{
-			res.write("<span id='insertQuerie'>"+elem+"</span><br>");
+			res.write("<span id='insertQuerie'>"+sqlFormatter(elem).split("\n").join("<br>")+"</span><br>");
 		});
 		res.write("<hr>");
 		res.write(footer);

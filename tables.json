@@ -1,33 +1,43 @@
-{"data":{
-	"usuario":[
-		"apelido VARCHAR(64) NOT NULL",
-		"hash CHAR(64)",
-		"nome VARCHAR(64)",
-		"dataAniversario DATE",
-		"PRIMARY KEY(apelido)"
-	],
-	"cardapio":[
-		"id INT NOT NULL",
-		"nome VARCHAR(64)",
-		"preco INT NOT NULL",
-		"PRIMARY KEY (id)"
-	],
-	"pedido":[
-		"id INT NOT NULL AUTO_INCREMENT",
-		"usuarioApelido VARCHAR(64),",
-		"status ENUM('espera','em producao','entregando','entregue')",
-		"endereco VARCHAR(255)",
-		"dataCriado DATETIME",
-		"dataModificado DATETIME",
-		"FOREIGN KEY (usuarioApelido) REFERENCES usuario(apelido)",
-		"PRIMARY KEY(id)"
-	],
-	"pedidoInfo":[
-		"idPedido INT",
-		"idCardapio INT",
-		"PRIMARY KEY (idPedido,idCardapio)",
-		"FOREIGN KEY(idPedido) REFERENCES pedido(id)",
-		"FOREIGN KEY(idCardapio) REFERENCES cardapio(id)"
-	]
-	}
+{
+    "data": {
+        "usuario": [
+            "apelido VARCHAR(64) NOT NULL",
+            "hash CHAR(64)",
+            "nome VARCHAR(64)",
+            "dataCriado DATE",
+            "dataAniversario DATE",
+            "PRIMARY KEY(apelido)"
+        ],
+        "cardapio": [
+            "id INT NOT NULL AUTO_INCREMENT",
+            "nome VARCHAR(64)",
+            "preco INT NOT NULL",
+            "custo INT NOT NULL",
+            "PRIMARY KEY (id)"
+        ],
+        "pedido": [
+            "id INT NOT NULL AUTO_INCREMENT",
+            "usuarioApelido VARCHAR(64)",
+            "endereco VARCHAR(128)",
+            "status ENUM('em espera','em producao','em entrega','entregue','cancelado')",
+            "dataCriado DATE",
+            "FOREIGN KEY (usuarioApelido) REFERENCES usuario(apelido)",
+            "PRIMARY KEY(id)"
+        ],
+        "pedidoInfo": [
+            "idPedido INT",
+            "idCardapio INT",
+            "qtd INT NOT NULL",
+            "PRIMARY KEY (idPedido,idCardapio)",
+            "FOREIGN KEY(idPedido) REFERENCES pedido(id)",
+            "FOREIGN KEY(idCardapio) REFERENCES cardapio(id)"
+        ],
+        "funcionario": [
+            "id INT NOT NULL AUTO_INCREMENT",
+            "nome VARCHAR(64)",
+            "salario INT NOT NULL",
+            "cargo ENUM('caixa','entregador','garcom','cozinheiro')",
+            "PRIMARY KEY (id)"
+        ]
+    }
 }

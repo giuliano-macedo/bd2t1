@@ -1,5 +1,9 @@
 {"data":[
-	"INSERT INTO usuario VALUES ('fulanoManeiro',SHA2('1234',256),'fulano','1995-01-01')"
+	"INSERT INTO usuario VALUES ('fulanoManeiro',SHA2('1234',256),'Fulano','2018-06-02','1995-01-01')",
+	"INSERT INTO cardapio VALUES (NULL,'Aleo e oleo', 20, 7)",
+	"INSERT INTO funcionario VALUES (NULL,'Lucas',1200,'caixa')",
+	"INSERT INTO pedido VALUES (NULL,'fulanoManeiro','em espera','Rosa Branca 91','2019-05-02')",
+	"INSERT INTO pedidoInfo VALUES (1,1,1)"
 
 ]
 }

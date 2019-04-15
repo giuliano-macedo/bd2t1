@@ -1,24 +1,100 @@
-{"data":[
-	[
-		"SELECT err FROM fib",
-		"erro"
-	],
-	[
-		"SELECT * FROM fib",
-		"Todos"
-	],
-
-	[
-		"SELECT * FROM fib WHERE n=1",
-		"onde n=1"
-	],
-	[
-		"SELECT * FROM fib WHERE n>=2",
-		"onde n>=2"
-	],
-	[
-		"SELECT * FROM fib WHERE n=10",
-		"Nada"
-	]
-]
+{
+    "data": [
+        [
+            "SELECT * FROM pedido WHERE status='em espera'",
+            "Mostrar todos os pedidos em espera"
+        ],
+        [
+            "SELECT endereco FROM pedido WHERE status='em entrega'",
+            "Mostrar endereço de todos os pedidos sendo entregues"
+        ],
+        [
+        	"SELECT * FROM funcionario WHERE salario=(SELECT MAX(salario) FROM funcionario)",
+        	"Mostrar funcionario com maior salario"
+        ],
+        [
+        	"SELECT * FROM funcionario WHERE salario=(SELECT min(salario) FROM funcionario)",
+        	"Mostrar funcionario com menor salario"
+        ],
+        [
+        	"SELECT SUM(salario) as despesa FROM funcionario",
+        	"Calcular despesa dos funcionario"
+        ],
+        [
+            "SELECT apelido,dataCriado FROM usuario WHERE dataCriado=(SELECT MIN(dataCriado) FROM usuario)",
+            "Mostrar apelido e data de cadastro do usuário registrado primeiro"
+        ],
+        [
+            "SELECT apelido,dataCriado FROM usuario WHERE dataCriado=(SELECT MAX(dataCriado) FROM usuario)",
+            "Mostrar apelido e data de cadastro do usuário registrado mais recentemente"
+        ],
+        [
+            "SELECT nome,preco FROM cardapio WHERE preco=(SELECT MAX(preco) FROM cardapio)",
+            "Mostrar o nome e preco do prato mais caro do cardapio"
+        ],
+        [
+            "SELECT nome,preco FROM cardapio WHERE preco=(SELECT MIN(preco) FROM cardapio)",
+            "Mostrar o nome e preco do prato mais barato do cardapio"
+        ],
+        [
+            "SELECT nome, endereco FROM pedido INNER JOIN usuario ON usuarioApelido=apelido",
+            "Mostrar nome e endereço de todos os pedidos"
+        ],
+        [
+            "SELECT nome, endereco FROM pedido INNER JOIN usuario ON usuarioApelido=apelido WHERE status='em entrega'",
+            "Mostrar nome e endereço de todos os pedidos em entrega"
+        ],
+        [
+            "SELECT nome,preco FROM pedidoInfo INNER JOIN cardapio ON idCardapio=cardapio.id INNER JOIN pedido ON idPedido=pedido.id WHERE usuarioApelido='fulanoManeiro'",
+            "Mostrar pratos e preco que o usuario de apelido fulanoManeiro já pediu"
+        ],
+        [
+            "SELECT nome,preco FROM pedidoInfo INNER JOIN cardapio ON idCardapio=cardapio.id INNER JOIN pedido ON idPedido=pedido.id WHERE usuarioApelido='fulanoManeiro' AND status='entregue'",
+            "Mostrar pratos e preco que o o usuario de apelido fulanoManeito pediu e já foi entregue"
+        ],
+        [
+            "SELECT SUM(preco*qtd) AS receitaBruta FROM pedidoInfo INNER JOIN cardapio ON idCardapio=cardapio.id INNER JOIN pedido ON idPedido=pedido.id WHERE usuarioApelido='llpinokio' AND status='entregue'",
+            "Mostrar o receita bruta do usuário com apelido 'llpinokio'"
+        ],
+        [
+            "SELECT SUM(preco*qtd) AS receitaBruta FROM pedidoInfo INNER JOIN cardapio ON idCardapio=cardapio.id INNER JOIN pedido ON idPedido=pedido.id  WHERE status='entregue' AND pedido.dataCriado='2019-01-01'",
+            "Calcular receita bruta total do dia 1 de janeiro de 2019"
+        ],
+        [
+            "SELECT SUM(preco*qtd) AS receitaBruta FROM pedidoInfo INNER JOIN cardapio ON idCardapio=cardapio.id INNER JOIN pedido ON idPedido=pedido.id WHERE status='entregue' AND dataCriado>='2019-01-01' AND dataCriado<'2019-02-01'",
+            "Calcular receita bruta total do mês de janeiro de 2019"
+        ],
+        [
+            "SELECT usuarioApelido,SUM(preco*qtd) AS receitaBruta FROM pedidoInfo INNER JOIN cardapio ON idCardapio=cardapio.id INNER JOIN pedido ON idPedido=pedido.id WHERE status='entregue' GROUP BY usuarioApelido",
+            "Mostrar apelido e receita bruta de cada usuário"
+        ],
+        [
+            "SELECT nome,SUM((preco-custo)*qtd) AS receitaLiquida FROM pedidoInfo INNER JOIN cardapio ON idCardapio=cardapio.id INNER JOIN pedido ON idPedido=pedido.id  WHERE status='entregue' GROUP BY nome",
+            "Calcular receita liquida de cada prato pedido"
+        ],
+        [
+            "SELECT SUM((preco-custo)*qtd) AS receitaLiquida FROM pedidoInfo INNER JOIN cardapio ON idCardapio=cardapio.id INNER JOIN pedido ON idPedido=pedido.id  WHERE status='entregue' AND dataCriado>='2019-01-01' AND dataCriado<'2019-02-01'",
+            "Calcular a receita liquida do mês de janeiro de 2019"
+        ],
+        [
+            "SELECT SUM((preco-custo)*qtd)-(SELECT SUM(salario) FROM funcionario) AS lucroLiquido FROM pedidoInfo INNER JOIN cardapio ON idCardapio=cardapio.id INNER JOIN pedido ON idPedido=pedido.id WHERE status='entregue' AND dataCriado>='2019-01-01' AND dataCriado<'2019-02-01'",
+            "Calcular lucro liquido do mês de janeiro de 2019"
+        ],
+        [
+            "SELECT nome,MAX(qtd) AS qtd FROM (SELECT nome,SUM(qtd) as qtd FROM pedidoInfo INNER JOIN cardapio ON idCardapio=cardapio.id GROUP BY nome ORDER BY qtd DESC)r",
+            "Mostrar o nome do prato mais pedido e quantas vezes foi pedido"
+        ],
+        [
+            "SELECT nome,MIN(qtd) AS qtd FROM (SELECT nome,SUM(qtd) as qtd FROM pedidoInfo INNER JOIN cardapio ON idCardapio=cardapio.id GROUP BY nome ORDER BY qtd ASC)r",
+            "Mostrar o nome do prato menos pedido e quantas vezes foi pedido"
+        ],
+        [
+            "SELECT usuarioApelido,MAX(qtd) AS qtd FROM (SELECT usuarioApelido,SUM(qtd) as qtd FROM pedidoInfo INNER JOIN cardapio ON idCardapio=cardapio.id INNER JOIN pedido ON  idPedido=pedido.id GROUP BY usuarioApelido ORDER BY qtd DESC)r",
+            "Mostrar usuario que mais pediu em quantidade, e a quantidade "
+        ],
+        [
+            "SELECT usuarioApelido,MIN(qtd) AS qtd FROM (SELECT usuarioApelido,SUM(qtd) as qtd FROM pedidoInfo INNER JOIN cardapio ON idCardapio=cardapio.id INNER JOIN pedido ON  idPedido=pedido.id GROUP BY usuarioApelido ORDER BY qtd ASC)r",
+            "Mostrar usuario que menos pediu em quantidade, e a quantidade "
+        ]
+    ]
 }
