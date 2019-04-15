@@ -9,7 +9,8 @@ class BDT1{
 		  host: "localhost",
 		  user: "node",
 		  password: "node",
-		  database:"bd2t"
+		  database:"bd2t",
+		  dateStrings: true
 		});
 		this.query = util.promisify(this.con.query).bind(this.con);
 	}
